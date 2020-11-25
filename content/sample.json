@@ -1,0 +1,22 @@
+[
+  {
+    "id": 1,
+    "name": "John Wyne",
+    "email": "john@crazy.com"
+  },
+  {
+    "id": 2,
+    "name": "Maryl Streep",
+    "email": "maryl@hollywood.com"
+  },
+  {
+    "id": 1,
+    "name": "Burt Lancaster",
+    "email": "oldburt@lancaster.com"
+  },
+  {
+    "id": 1,
+    "name": "Jimmy Hendrix",
+    "email": "greetings@fromheaven.com"
+  }
+]

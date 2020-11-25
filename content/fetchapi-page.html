@@ -1,0 +1,226 @@
+<!-- FETCH API -->
+<div id="fetch-container">
+  <h1>JS Fetch API</h1>
+  <div class="container-content">
+    <div class="menu-fetch-api">
+      <button id="getText">Text importieren</button>
+      <button id="getJson">JSON importieren</button>
+      <button id="getApi">Von API importieren</button>
+      <button id="sendApi">POST zur API</button>
+    </div>
+
+    <div class="content-fetch-api">
+      <div class="" id="display-result-fetch"></div>
+      <div id="content-fetch"></div>
+    </div>
+  </div>
+</div>
+<script>
+  console.log("fetch api");
+
+  const contentFetch = document.getElementById("content-fetch");
+  const displayResultFetch = document.getElementById("display-result-fetch");
+  const getText = document.getElementById("getText");
+  const getJson = document.getElementById("getJson");
+  const getApi = document.getElementById("getApi");
+  const sendApi = document.getElementById("sendApi");
+
+  /**
+   * FETCH TEXTFILE
+   */
+  const addTextFile = () => {
+    clearFetchContainers();
+
+    fetch("../content/sample.txt")
+      .then((res) => res.text())
+      .then((data) => {
+        element = document.createElement("div");
+        element.innerHTML = `Mit der JS Fetch API ein lokales <strong>Textfile</strong> importieren und anzeigen. Man kann die Promise Methode mit ".then()" verwenden oder die "async await" Methode.
+        <h5>Mit Promise</h5>
+        <pre>
+        const addTextFile = () => {
+          fetch("../modulFetchAPI/sample.txt")
+          .then((res) => res.text())
+          .then((data) => {
+            contentFetch.innerHTML = data;
+          }).catch( err => console.log(err));
+        });
+        </pre>
+        <h5>Mit async await</h5>
+        <pre>
+          const addTextFile = async () => {
+            const result = await fetch("../modulFetchAPI/sample.txt").catch(err => console.log(err));
+            const data = await result.text();
+          
+            contentFetch.innerHTML = data;
+          };
+        </pre>
+        `;
+        displayResultFetch.appendChild(element);
+
+        contentFetch.innerHTML = data;
+      })
+      .catch((err) => console.log(err));
+  };
+  const addTextFileAsync = async () => {
+    const result = await fetch("../content/sample.txt").catch((err) =>
+      console.log(err)
+    );
+    const data = await result.text();
+
+    contentFetch.innerHTML = data;
+  };
+
+  /**
+   * FETCH JSON FILE
+   */
+  const addJsonFilePromise = () => {
+    clearFetchContainers();
+
+    fetch("../content/sample.json")
+      .then((res) => res.json())
+      .then((data) => {
+        console.log(data);
+
+        element = document.createElement("div");
+        element.innerHTML = `Mit der JS Fetch API ein lokales <strong>JSON File</strong> importieren und anzeigen. Man kann die Promise Methode mit ".then()" verwenden oder die "async await" Methode.
+        <h5>Mit Promise</h5>
+        <pre>
+        const addJsonFilePromise = () => {
+          fetch("../modulFetchAPI/sample.json")
+            .then((res) => res.json())
+            .then((data) => {
+              console.log(data);
+            });
+        };
+        
+        </pre>
+        `;
+        displayResultFetch.appendChild(element);
+
+        let personList = "<div><h2>Personen</h2>";
+        data.forEach((item) => {
+          personList += `<ul>
+                        <li>${item.id}</li>
+                        <li>${item.name}</li>
+                        <li>${item.email}</li>
+                    </ul>`;
+        });
+        personList += "</div>";
+        contentFetch.innerHTML = personList;
+      });
+  };
+
+  /**
+   * FETCH DATA FROM API
+   */
+  const addApiPromise = () => {
+    clearFetchContainers();
+
+    fetch("https://jsonplaceholder.typicode.com/posts")
+      .then((res) => res.json())
+      .then((data) => {
+        element = document.createElement("div");
+        fetch("https://jsonplaceholder.typicode.com/posts");
+        element.innerHTML = `Mit der JS Fetch API Daten von einer <strong>REST Api Schnittstelle</strong> laden. Bei diesem Beispiel verwenden wir folgenden Endpoint: https://jsonplaceholder.typicode.com/posts 
+        <h5>Mit Promise</h5>
+        <pre>
+        const addApiPromise = () => {
+          fetch("https://jsonplaceholder.typicode.com/posts")
+            .then((res) => res.json())
+            .then((data) => {
+              data.forEach((post) => {
+                console.log(post)
+              });
+            });
+        };
+        </pre>
+        `;
+        displayResultFetch.appendChild(element);
+
+        let apiResult = "<h2>Personen aus API</h2>";
+        data.forEach((post) => {
+          apiResult += `<div>
+            <h3>${post.title}</h3>
+            <p>${post.body}</p>
+          </div>`;
+        });
+        contentFetch.innerHTML = apiResult;
+      });
+  };
+
+  const clearFetchContainers = () => {
+    displayResultFetch.innerHTML = "";
+    contentFetch.innerHTML = "";
+  };
+
+  /**
+   * SEND DATA TO API WITH POST
+   */
+  const addPostToApiPromise = () => {
+    clearFetchContainers();
+
+    const element = document.createElement("div");
+    element.innerHTML = `<div>
+                            <pre>
+                            fetch("https://jsonplaceholder.typicode.com/posts", {
+                              method: "POST",
+                              headers: {
+                                Accept: "application/Json, text/plain, */*",
+                                "Content-Type": "application/Json",
+                              },
+                              body: JSON.stringify({
+                                title: title,
+                                body: body,
+                              }),
+                            })
+                              .then((res) => res.json())
+                              .then((data) => {
+                                console.log(data)
+                              });
+                            </pre>
+                            <form id="api-submit">
+                              <input id="title" type="text" placeholder="Titel">
+                              <textarea id="body" placeholder="Post Inhalt"></textarea>
+                              <input type="submit" value="Senden" >     
+                            </form>
+                            <div id="result-api"></div>
+                       </div>`;
+    contentFetch.appendChild(element);
+
+    const sendPost = (e) => {
+      e.preventDefault();
+      const title = document.getElementById("title").value;
+      const body = document.getElementById("body").value;
+      console.log(title + " : " + body);
+
+      fetch("https://jsonplaceholder.typicode.com/posts", {
+        method: "POST",
+        headers: {
+          Accept: "application/Json, text/plain, */*",
+          "Content-Type": "application/Json",
+        },
+        body: JSON.stringify({
+          title: title,
+          body: body,
+        }),
+      })
+        .then((res) => res.json())
+        .then((data) => {
+          document.getElementById(
+            "result-api"
+          ).innerHTML = `<h5>Response vom Server:</h5><h3>${data.title}</h3><p>${data.body}</p>`;
+        });
+    };
+
+    document.getElementById("api-submit").addEventListener("submit", sendPost);
+  };
+
+  /**
+   * EVENT LISTENERS
+   */
+  getText.addEventListener("click", addTextFile);
+  getJson.addEventListener("click", addJsonFilePromise);
+  getApi.addEventListener("click", addApiPromise);
+  sendApi.addEventListener("click", addPostToApiPromise);
+</script>

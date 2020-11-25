@@ -1,0 +1,47 @@
+
+    <!-- CSS BEFEHLE -->
+    <div id="css-container">
+        <h1>CSS</h1>
+        
+        
+        <h2>Allgemeine CSS 3 Regeln</h2>
+        <pre>
+          > entferne alle paddings und margins
+          * {
+              box-sizing: border-box;
+          }
+  
+          > alle folgende elemente im body enthalten automatisch flex-box 
+          body {
+              display: flex;
+          }
+  
+          > wählt alle Klassen aus, welche eine bestimmte Klasse nicht enthält
+          .seat:not(occupied)
+  
+          -- CCS Variablen -- 
+          :root  (root gilt für das gesamte CSS)
+              --success-color: green;
+              --error-color: red;
+          }
+        </pre>
+        <H2>Transition</H2>
+        <p>Um mit CSS eine Eigenschaft zu animieren kann mit <strong>transition</strong> bei der 
+        ursprünglichen Klassendefinition angegeben werden, mit der Eigenschaft, die verändert werden soll.</p>
+        <p>Zum Beispiel kann <strong>transform</strong> ausgeführt werden.</p>
+        <p>Sobald die entsprechende Klasse "mit Javascript" dem Element hinzugeführt wird, wird die Animation ausgeführt.</p>
+        <h3>Hier ein Beispiel:</h3>
+        <pre>
+          .notification-container {
+            position: absolute;
+            bottom: -50px;
+            transition: transform 0.3 ease-in-out;
+          }
+          
+          .notification-container.show {
+            transform: translateY(-50px);
+          }
+  
+        </pre>
+      </div>
+      </div>

@@ -1,0 +1,164 @@
+<!-- GENERELLES ZU JAVASCRIPT ES6 -->
+<div id="general-javascript">
+  <h2>Verschiedene wichtige Punkte</h2>
+
+  <h4>Selektoren</h4>
+  <p>um ein einzelnes Element zu selektieren</p>
+  <pre>
+            document.querySelector('.container')
+          </pre
+  >
+
+  <p>um mehrere Elemente gleichzeitig zu selektieren (array)</p>
+  <pre>
+            const container = document.querySelector('.container');
+            const seats = document.querySelectorAll('.row .seat:not(occupied)');
+          </pre
+  >
+
+  <h4>Typen</h4>
+  <p>typeof zeigt den Type einer Variable an (gut beim debuggen)</p>
+  <pre>
+            console.log(typeof ticketPrice);
+          </pre
+  >
+  <p>
+    Anstelle von parseInt() zum Umwandlen des Types zu "Number" kann auch ein +
+    verwendet werden
+  </p>
+  <pre>
+            let ticketPrice = +movieSelect.value;
+          </pre
+  >
+
+  <h4>Array Methoden</h4>
+  <p>
+    Kopiert das Array "seats" und schaut, ob "seat" darin enthalten ist und
+    speichert das Resultat im neuen Array "seatsIndex". Im Gegensatz zu
+    "forEach", das eigentlich nur durch ein Array loopt, wird bei "map" mit
+    "return" das Resultat in einem neuen Array gespeichert
+  </p>
+  <pre>
+            const seatsIndex = [...selectedSeats].map( seat => {
+                return [...seats].indexOf( seat );
+            }); 
+          </pre
+  >
+
+  <h4>Math Funktionen</h4>
+  <p>Aus einem Array zufällig einen Wert anzeigen</p>
+  <pre>
+            const words = ["javascript", "html", "css", "server"];
+            const selectedWord = words[Math.floor(Math.random() * words.length)];
+          </pre
+  >
+
+  <h4>Local Storage</h4>
+  <p>
+    localStorage benötigt ein "STRING value Paar" Objekt. Das "seatsIndex" Array
+    wird daher in einen JSON String umgewandelt
+  </p>
+  <pre>
+            localStorage.setItem('selectedSeats', JSON.stringify(seatsIndex));
+          </pre
+  >
+
+  <p>das Gegenteil JSON.parse() macht aus einem String wieder ein Array</p>
+  <pre>
+            const seatsLocalStorage = JSON.parse(localStorage.getItem('selectedSeats'));
+          </pre
+  >
+
+  <p>Funktion für das Aktualisieren des Local Storage</p>
+  <pre>
+            const updateSelectLocalStorage = (indexSelect, price) => {
+              localStorage.setItem('indexSelect', indexSelect);
+              localStorage.setItem('moviePrice', price);
+          }
+          
+          </pre
+  >
+
+  <h4>Event Listeners</h4>
+  <p>
+    <strong>Key Listeners</strong>: Beim drücken einer Taste wird mit
+    <strong>'keydown'</strong> ein Event ausgelöst. Jede Taste hat eine Zahl
+    zugeordnet <strong>e.keyCode</strong>. Die Zahlen für die Buchstaben gehen
+    von <strong>65 bis 90</strong>
+  </p>
+  <pre>
+    window.addEventListener("keydown", (e) => {
+      console.log(e.keyCode);
+    });
+  </pre>
+
+  <h4>Backticks (Template Strings)</h4>
+  <p>
+    Mit Backticks können nicht nur Variablen sondern auch Funktionen in einem
+    String dargestellt werden.<br />
+    <strong>Beispiel: </strong>Ein "String" wird in ein "Array" umgewandelt
+    <strong>split()</strong>, dann wird durch das Array geloopt
+    <strong>map()</strong>, es werden erneut Backticks `` verwendet und erneut
+    im "String" eine Funktion ausgeführt, dann wird das Array wieder in einen
+    String umgewandelt <strong>join()</strong>.
+  </p>
+  <pre>
+            const displayWord = () => {
+              wordEl.innerHTML = `
+                    ${selectedWord
+                      .split("")
+                      .map(
+                        (letter) =>
+                          `
+                                <span class="letter">
+                                    ${correctLetters.includes(letter) ? letter : ""}
+                                </span>
+                                `
+                      )
+                      .join("")}
+                `;
+            };
+          </pre>
+
+  <h4>Verschiedenes</h4>
+  <p>
+    Neu ES6 falls providedData fehlt, wird der Wert aus der Variable "data"
+    verwendet
+  </p>
+  <pre>
+            const updateDOM = (providedData = data) => {
+            }
+          </pre
+  >
+  <hr />
+  <p>
+    Mit der <strong>replace()</strong> Funktion können Teile aus einem String
+    ersetzt werden.<br />
+    <strong>Beispiel:</strong> Die Zeilenumbrüche werden aus ein String
+    entfernt.
+  </p>
+  <pre>
+  const innerWord = wordEl.innerText.replace(/\n/g, "");
+  </pre>
+  <hr />
+
+  <p>
+    Mit <strong>.style</strong> kann man einfach einem Element einen
+    <strong>Inline Style</strong> hinzufügen.<br />
+  </p>
+  <pre>
+    popup.style.display = "flex";
+          </pre
+  >
+  <hr />
+  <p>
+    <strong>Timer: </strong>Mit der Timeout Funktion lässt sich eine Funktion
+    nach einer gewissen Zeit ausführen.
+  </p>
+  <pre>
+        setTimeout(() => { 
+          notification.classList.remove("show"); 
+        }, 2000); </pre
+  >
+  <hr />
+</div>

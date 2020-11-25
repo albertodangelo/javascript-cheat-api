@@ -1,0 +1,117 @@
+* {
+  box-sizing: border-box;
+}
+body {
+  display: flex;
+  flex-direction: column;
+  font-family: Arial, Helvetica, sans-serif;
+}
+.container {
+  display: flex;
+  flex-direction: row;
+}
+aside {
+  display: flex;
+  flex-direction: column;
+  padding: 20px;
+}
+aside button {
+  margin: 5px;
+}
+h4 {
+  text-decoration: underline;
+}
+
+#content {
+  padding: 20px;
+  display: flex;
+  flex-direction: column;
+  justify-content: flex-start;
+  width: 280px;
+}
+button {
+  width: 100%;
+}
+.person {
+  display: flex;
+  flex-direction: row;
+  justify-content: space-between;
+}
+menu ul {
+  display: flex;
+  font-size: 14px;
+  z-index: 20;
+  position: absolute;
+}
+menu ul li {
+  list-style-type: none;
+  background: #e5e5e5;
+  margin-right: 30px;
+  padding: 20px;
+  cursor: pointer;
+}
+menu ul li:hover {
+  background: rgba(0, 0, 0, 0.2);
+  cursor: pointer;
+}
+menu ul li.active {
+  background: rgba(0, 0, 0, 0.2);
+  cursor: pointer;
+}
+menu ul li a {
+  text-decoration: none;
+  margin-right: 20px;
+  color: #000;
+  cursor: pointer;
+}
+
+#fetch-container,
+#general-javascript,
+#cmd-container,
+#api-container,
+#visual-studio-container,
+#general-js-container,
+#css-container,
+#array-container {
+  padding: 80px;
+  padding-top: 150px;
+}
+
+.total {
+  display: flex;
+  flex-direction: row;
+  justify-content: space-between;
+  font-size: 16px;
+}
+
+/* FETCH API MODUL */
+.container-content {
+  display: flex;
+  flex-direction: row;
+  margin-right: 20px;
+}
+.menu-fetch-api {
+  padding-right: 20px;
+}
+
+#content-fetch {
+  padding: 20px;
+  border: 1px solid #ededed;
+  background: #ededed;
+}
+#getText,
+#getJson,
+#getApi,
+#sendApi {
+  margin: 5px;
+  font-size: 18px;
+  padding: 10px 5px;
+}
+form#api-submit {
+  display: flex;
+  flex-direction: column;
+}
+textarea#body {
+  margin-top: 10px;
+  margin-bottom: 10px;
+}

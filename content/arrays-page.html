@@ -1,0 +1,182 @@
+<!-- ARRAY METHODS -->
+
+<div id="array-container">
+  <div id="info"></div>
+  <div class="container">
+    <aside>
+      <button id="foreach" style="color: green">forEach Methode</button>
+      <button id="map">Map Methode</button>
+      <button id="sort">Sort Methode</button>
+      <button id="filter">Filter Methode</button>
+      <button id="calculate">Calculate</button>
+    </aside>
+    <div id="content">
+      <h4><strong>Menschen</strong> Vermögen</h4>
+    </div>
+  </div>
+</div>
+<script>
+  const for_each = document.getElementById("foreach");
+  const map = document.getElementById("map");
+  const filter = document.getElementById("filter");
+  const sort = document.getElementById("sort");
+  const calculate = document.getElementById("calculate");
+  const content = document.getElementById("content");
+  const info = document.getElementById("info");
+  const arraycontainer = document.getElementById("array-container");
+
+  data = [];
+
+  const getUser = async () => {
+    info.innerHTML = `<h2>forEach Funktion</h2>
+      <p>Die <strong>forEach</strong> Funktion ist identisch mit einem <strong>for-loop</strong>
+      Es wird durch ein bestehende Array iteriert und das Array wird 
+      dabei <strong>direkt aktualisiert</strong>. 
+      </p>
+      <pre>
+          newData.forEach((item, index, arr) => {
+              const element = document.createElement("div");
+              element.classList.add("person");
+              element.innerHTML = <strong>item.name</strong>item.money;
+              content.appendChild(element);
+          });
+      </pre>`;
+
+    const res = await fetch("https://randomuser.me/api");
+    const data = await res.json();
+
+    const user = data.results[0];
+
+    console.log(user);
+
+    const newUser = {
+      name: `${user.name.first}`,
+      money: Math.floor(Math.random() * 1000000),
+    };
+
+    addData(newUser);
+  };
+
+  // Der neue User wird dem User Array übergeben
+  const addData = (obj) => {
+    data.push(obj);
+    displayInDOM();
+  };
+
+  const doubleMoney = () => {
+    console.log("click");
+    info.innerHTML = `<h2>Map Funktion</h2>
+                          <p>Die <strong>map</strong> Funktion erzeugt im Gegensatz
+                          zur <strong>forEach</strong> Funktion ein <strong>neues Array</strong>. 
+                          In diesem Beispiel wird der <strong>Spread Operator</strong> verwendet um im
+                          bestehenden Objekt den Wert "money" zu duplizieren. Man kann das Duplizieren natürlich auch in eine Funktion auslagern und am Spread Operator übergeben.</p>
+                          <pre>
+                              data = data.map((item, index, array) => {
+                                  console.log(item);
+                                  return { ...item, money: item.money * 2 };
+                              });
+                          </pre>`;
+
+    data = data.map((item, index, array) => {
+      console.log(item);
+      return { ...item, money: item.money * 2 };
+    });
+
+    displayInDOM();
+  };
+
+  // Die Array Sort Funktion
+  const sortByHighest = (newData = data) => {
+    console.log("click");
+    info.innerHTML = `<h2>Sort Funktion</h2>
+                          <p>Die <strong>sort</strong> Funktion erwartet einen String. 
+                          Ansonst kommt es zu Fehlern. Aus [1, 2, 111] würde sonst [1,111,2],
+                          was natürlich falsch wäre. Daher benötige die <strong>Array sort Funktion</strong> für Zahlen eine Vergleichsfunktion
+                          <pre>
+                          (a, b) => { return a - b }
+                          </pre> 
+                          (a und b können irgendwelche Bezeichnung haben, spielt keine Rolle). 
+                          Für die umgekehrte Reihenfolge <strong>{ return b - a }</strong><br />
+                          Da a und b Parameter für Objekte sind, muss noch angegeben, nach welchem Element im Objekt sortiert werden soll. In unserem Beispiel das wäre dies das Element: money
+                          <pre>
+                            data.sort((a, b) => {
+                              return b.money - a.money;
+                            });
+                          </pre>`;
+
+    data.sort((a, b) => {
+      return b.money - a.money;
+    });
+
+    displayInDOM();
+  };
+
+  // Die Array Filtermethode
+  const overOneMillion = (newData = data) => {
+    console.log("click");
+    info.innerHTML = `<h2>Filter Methode</h2>
+                          <p>Die <strong>filter</strong> Methode gibt eine <strong>neues Array</strong> zurück. Bei dieser Funktion kann man gewisse Bedingungen, wie > < === usw. angeben. Nur die Werte die diese Bedingung erfüllen, werden an das neue Array übergeben. In diesem Beispiel, Werte über einer Million. Da Objekte gefiltert werden, muss angegeben werden, welches Element gefiltert werden soll. In diesem Beispiel: money.
+                          <pre>
+                            data = data.filter((item) => {
+                              return item.money >= 1000000;
+                            });
+                          </pre>`;
+
+    data = data.filter((item) => {
+      return item.money >= 1000000;
+    });
+
+    displayInDOM();
+  };
+
+  // Die JS-Reduce Funktion
+  const totalMoney = (newData = data) => {
+    console.log("click");
+    info.innerHTML = `<h2>Reduce Methode</h2>
+                          <p>Die <strong>reduce</strong> Methode gibt einen <strong>totalen Wert</strong> zurück. Bei dieser Funktion wird ein Akkumulator verwendet, ein Parameter für den totalen Betrag, ein Parameter für den zu addierenden Wert und eine Zahl für den Startwert. Da Werte aus einem Objekt akkumuliert werden sollen, muss angegeben werden, welches Element akkumuliert werden soll. In diesem Beispiel: money.
+                          <pre>
+                            const total = data.reduce((acc, item) => {
+                              return acc + item.money;
+                            }, 0);
+                          </pre>`;
+
+    const total = data.reduce((acc, item) => {
+      return acc + item.money;
+    }, 0);
+
+    console.log(total);
+    const element = document.createElement("div");
+    element.innerHTML = `<p class="total"><span>Totalbetrag</span><span><strong>${addCurrency(
+      total
+    )}</strong></span></p>`;
+
+    content.appendChild(element);
+  };
+
+  // Mit dieser Funktion werden die Daten im DOM angezeigt
+  const displayInDOM = (newData = data) => {
+    content.innerHTML = "<h4><strong>Menschen</strong> Vermögen</h4>";
+
+    newData.forEach((item, index, arr) => {
+      const element = document.createElement("div");
+      element.classList.add("person");
+      element.innerHTML = `<strong>${item.name}</strong>${addCurrency(
+        item.money
+      )}`;
+      content.appendChild(element);
+    });
+  };
+
+  const addCurrency = (value) => {
+    return `CHF ${value.toFixed(2).replace(/\d(?=(\d{3})+\.)/g, "$&,")}`;
+  };
+
+  /**
+   * ALLE EVENT LISTENERS ARRAYS PAGE
+   */
+  for_each.addEventListener("click", getUser);
+  map.addEventListener("click", doubleMoney);
+  sort.addEventListener("click", sortByHighest);
+  filter.addEventListener("click", overOneMillion);
+  calculate.addEventListener("click", totalMoney);
+</script>
